@@ -10,7 +10,7 @@ import (
 	"os"
 	"slices"
 
-	"github.com/stainless-sdks/ee-cli/pkg/cmd"
+	"github.com/pops-maellard/stainless-cli/pkg/cmd"
 	"github.com/stainless-sdks/ee-go"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v3"

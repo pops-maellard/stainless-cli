@@ -12,8 +12,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/stainless-sdks/ee-cli/internal/autocomplete"
-	"github.com/stainless-sdks/ee-cli/internal/requestflag"
+	"github.com/pops-maellard/stainless-cli/internal/autocomplete"
+	"github.com/pops-maellard/stainless-cli/internal/requestflag"
 	docs "github.com/urfave/cli-docs/v3"
 	"github.com/urfave/cli/v3"
 )

@@ -14,10 +14,10 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/stainless-sdks/ee-cli/internal/apiform"
-	"github.com/stainless-sdks/ee-cli/internal/apiquery"
-	"github.com/stainless-sdks/ee-cli/internal/debugmiddleware"
-	"github.com/stainless-sdks/ee-cli/internal/requestflag"
+	"github.com/pops-maellard/stainless-cli/internal/apiform"
+	"github.com/pops-maellard/stainless-cli/internal/apiquery"
+	"github.com/pops-maellard/stainless-cli/internal/debugmiddleware"
+	"github.com/pops-maellard/stainless-cli/internal/requestflag"
 	"github.com/stainless-sdks/ee-go/option"
 
 	"github.com/goccy/go-yaml"

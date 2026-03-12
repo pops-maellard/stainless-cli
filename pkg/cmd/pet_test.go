@@ -5,8 +5,8 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/ee-cli/internal/mocktest"
-	"github.com/stainless-sdks/ee-cli/internal/requestflag"
+	"github.com/pops-maellard/stainless-cli/internal/mocktest"
+	"github.com/pops-maellard/stainless-cli/internal/requestflag"
 )
 
 func TestPetsCreate(t *testing.T) {

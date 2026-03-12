@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stainless-sdks/ee-cli/internal/apiquery"
+	"github.com/pops-maellard/stainless-cli/internal/apiquery"
 	"github.com/stainless-sdks/ee-go"
 	"github.com/stainless-sdks/ee-go/option"
 	"github.com/tidwall/gjson"
