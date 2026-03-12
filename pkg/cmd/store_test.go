@@ -5,7 +5,7 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/ee-cli/internal/mocktest"
+	"github.com/pops-maellard/stainless-cli/internal/mocktest"
 )
 
 func TestStoreListInventory(t *testing.T) {

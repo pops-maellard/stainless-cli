@@ -16,7 +16,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/stainless-sdks/ee-cli/internal/jsonview"
+	"github.com/pops-maellard/stainless-cli/internal/jsonview"
 	"github.com/stainless-sdks/ee-go/option"
 
 	"github.com/charmbracelet/x/term"
