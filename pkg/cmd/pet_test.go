@@ -13,8 +13,9 @@ func TestPetsCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "create",
+			t,
 			"--api-key", "string",
+			"pets", "create",
 			"--name", "doggie",
 			"--photo-url", "string",
 			"--id", "10",
@@ -30,8 +31,9 @@ func TestPetsCreate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "create",
+			t,
 			"--api-key", "string",
+			"pets", "create",
 			"--name", "doggie",
 			"--photo-url", "string",
 			"--id", "10",
@@ -58,8 +60,9 @@ func TestPetsCreate(t *testing.T) {
 			"  - id: 0\n" +
 			"    name: name\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "pets", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"pets", "create",
 		)
 	})
 }
@@ -68,8 +71,9 @@ func TestPetsRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "retrieve",
+			t,
 			"--api-key", "string",
+			"pets", "retrieve",
 			"--pet-id", "0",
 		)
 	})
@@ -79,8 +83,9 @@ func TestPetsUpdate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "update",
+			t,
 			"--api-key", "string",
+			"pets", "update",
 			"--name", "doggie",
 			"--photo-url", "string",
 			"--id", "10",
@@ -96,8 +101,9 @@ func TestPetsUpdate(t *testing.T) {
 
 		// Alternative argument passing style using inner flags
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "update",
+			t,
 			"--api-key", "string",
+			"pets", "update",
 			"--name", "doggie",
 			"--photo-url", "string",
 			"--id", "10",
@@ -124,8 +130,9 @@ func TestPetsUpdate(t *testing.T) {
 			"  - id: 0\n" +
 			"    name: name\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "pets", "update",
+			t, pipeData,
 			"--api-key", "string",
+			"pets", "update",
 		)
 	})
 }
@@ -134,8 +141,9 @@ func TestPetsDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "delete",
+			t,
 			"--api-key", "string",
+			"pets", "delete",
 			"--pet-id", "0",
 		)
 	})
@@ -145,8 +153,9 @@ func TestPetsFindByStatus(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "find-by-status",
+			t,
 			"--api-key", "string",
+			"pets", "find-by-status",
 			"--status", "available",
 		)
 	})
@@ -156,8 +165,9 @@ func TestPetsFindByTags(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "find-by-tags",
+			t,
 			"--api-key", "string",
+			"pets", "find-by-tags",
 			"--tag", "string",
 		)
 	})
@@ -167,8 +177,9 @@ func TestPetsUpdateByID(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "update-by-id",
+			t,
 			"--api-key", "string",
+			"pets", "update-by-id",
 			"--pet-id", "0",
 			"--name", "name",
 			"--status", "status",
@@ -180,8 +191,9 @@ func TestPetsUploadImage(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "pets", "upload-image",
+			t,
 			"--api-key", "string",
+			"pets", "upload-image",
 			"--pet-id", "0",
 			"--image", mocktest.TestFile(t, "Example data"),
 			"--additional-metadata", "additionalMetadata",
@@ -192,8 +204,9 @@ func TestPetsUploadImage(t *testing.T) {
 		// Test piping YAML data over stdin
 		pipeData := []byte("Example data")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "pets", "upload-image",
+			t, pipeData,
 			"--api-key", "string",
+			"pets", "upload-image",
 			"--pet-id", "0",
 			"--additional-metadata", "additionalMetadata",
 		)
