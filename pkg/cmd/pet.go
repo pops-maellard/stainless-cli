@@ -225,9 +225,10 @@ var petsUploadImage = cli.Command{
 			Required: true,
 		},
 		&requestflag.Flag[string]{
-			Name:     "image",
-			Required: true,
-			BodyRoot: true,
+			Name:      "image",
+			Required:  true,
+			BodyRoot:  true,
+			FileInput: true,
 		},
 		&requestflag.Flag[string]{
 			Name:      "additional-metadata",
