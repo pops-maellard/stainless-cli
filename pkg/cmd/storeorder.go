@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/pops-maellard/stainless-cli/internal/apiquery"
 	"github.com/pops-maellard/stainless-cli/internal/requestflag"
@@ -110,7 +109,12 @@ func handleStoreOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "store:orders create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "store:orders create",
+		Transform:      transform,
+	})
 }
 
 func handleStoreOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -146,7 +150,12 @@ func handleStoreOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "store:orders retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "store:orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleStoreOrdersDelete(ctx context.Context, cmd *cli.Command) error {
