@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/pops-maellard/stainless-cli/internal/apiquery"
 	"github.com/pops-maellard/stainless-cli/internal/requestflag"
@@ -244,7 +243,12 @@ func handleUsersCreate(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "users create", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "users create",
+		Transform:      transform,
+	})
 }
 
 func handleUsersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -280,7 +284,12 @@ func handleUsersRetrieve(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "users retrieve", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "users retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleUsersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -372,7 +381,12 @@ func handleUsersCreateWithList(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "users create-with-list", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "users create-with-list",
+		Transform:      transform,
+	})
 }
 
 func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
@@ -407,7 +421,12 @@ func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
 	format := cmd.Root().String("format")
 	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, os.Stderr, "users login", obj, format, explicitFormat, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		Title:          "users login",
+		Transform:      transform,
+	})
 }
 
 func handleUsersLogout(ctx context.Context, cmd *cli.Command) error {
