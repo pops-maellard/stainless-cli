@@ -80,8 +80,9 @@ var petsRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
-			Name:     "pet-id",
-			Required: true,
+			Name:      "pet-id",
+			Required:  true,
+			PathParam: "petId",
 		},
 	},
 	Action:          handlePetsRetrieve,
@@ -152,8 +153,9 @@ var petsDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
-			Name:     "pet-id",
-			Required: true,
+			Name:      "pet-id",
+			Required:  true,
+			PathParam: "petId",
 		},
 	},
 	Action:          handlePetsDelete,
@@ -197,8 +199,9 @@ var petsUpdateByID = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
-			Name:     "pet-id",
-			Required: true,
+			Name:      "pet-id",
+			Required:  true,
+			PathParam: "petId",
 		},
 		&requestflag.Flag[string]{
 			Name:      "name",
@@ -221,8 +224,9 @@ var petsUploadImage = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
-			Name:     "pet-id",
-			Required: true,
+			Name:      "pet-id",
+			Required:  true,
+			PathParam: "petId",
 		},
 		&requestflag.Flag[string]{
 			Name:      "image",
@@ -248,8 +252,6 @@ func handlePetsCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.PetNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -260,6 +262,8 @@ func handlePetsCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.PetNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -331,8 +335,6 @@ func handlePetsUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.PetUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -343,6 +345,8 @@ func handlePetsUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.PetUpdateParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -397,8 +401,6 @@ func handlePetsFindByStatus(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.PetFindByStatusParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -409,6 +411,8 @@ func handlePetsFindByStatus(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.PetFindByStatusParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -438,8 +442,6 @@ func handlePetsFindByTags(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.PetFindByTagsParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -450,6 +452,8 @@ func handlePetsFindByTags(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.PetFindByTagsParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -482,8 +486,6 @@ func handlePetsUpdateByID(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.PetUpdateByIDParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -494,6 +496,8 @@ func handlePetsUpdateByID(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.PetUpdateByIDParams{}
 
 	return client.Pets.UpdateByID(
 		ctx,
@@ -524,8 +528,6 @@ func handlePetsUploadImage(ctx context.Context, cmd *cli.Command) error {
 	}
 	defer bodyReader.Close()
 
-	params := ee.PetUploadImageParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -536,6 +538,8 @@ func handlePetsUploadImage(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.PetUploadImageParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))

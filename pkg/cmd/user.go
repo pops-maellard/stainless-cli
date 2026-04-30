@@ -63,8 +63,9 @@ var usersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "username",
-			Required: true,
+			Name:      "username",
+			Required:  true,
+			PathParam: "username",
 		},
 	},
 	Action:          handleUsersRetrieve,
@@ -77,8 +78,9 @@ var usersUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "existing-username",
-			Required: true,
+			Name:      "existing-username",
+			Required:  true,
+			PathParam: "username",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "id",
@@ -124,8 +126,9 @@ var usersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "username",
-			Required: true,
+			Name:      "username",
+			Required:  true,
+			PathParam: "username",
 		},
 	},
 	Action:          handleUsersDelete,
@@ -219,8 +222,6 @@ func handleUsersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -231,6 +232,8 @@ func handleUsersCreate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.UserNewParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -305,8 +308,6 @@ func handleUsersUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -317,6 +318,8 @@ func handleUsersUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.UserUpdateParams{}
 
 	return client.Users.Update(
 		ctx,
@@ -359,8 +362,6 @@ func handleUsersCreateWithList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserNewWithListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -371,6 +372,8 @@ func handleUsersCreateWithList(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.UserNewWithListParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
@@ -400,8 +403,6 @@ func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserLoginParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -412,6 +413,8 @@ func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.UserLoginParams{}
 
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
