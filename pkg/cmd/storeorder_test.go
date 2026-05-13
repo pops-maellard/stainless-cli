@@ -5,15 +5,16 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stainless-sdks/ee-cli/internal/mocktest"
+	"github.com/pops-maellard/stainless-cli/internal/mocktest"
 )
 
 func TestStoreOrdersCreate(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "store:orders", "create",
+			t,
 			"--api-key", "string",
+			"store:orders", "create",
 			"--id", "10",
 			"--complete=true",
 			"--pet-id", "198772",
@@ -33,8 +34,9 @@ func TestStoreOrdersCreate(t *testing.T) {
 			"shipDate: '2019-12-27T18:11:19.117Z'\n" +
 			"status: approved\n")
 		mocktest.TestRunMockTestWithPipeAndFlags(
-			t, pipeData, "store:orders", "create",
+			t, pipeData,
 			"--api-key", "string",
+			"store:orders", "create",
 		)
 	})
 }
@@ -43,8 +45,9 @@ func TestStoreOrdersRetrieve(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "store:orders", "retrieve",
+			t,
 			"--api-key", "string",
+			"store:orders", "retrieve",
 			"--order-id", "0",
 		)
 	})
@@ -54,8 +57,9 @@ func TestStoreOrdersDelete(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	t.Run("regular flags", func(t *testing.T) {
 		mocktest.TestRunMockTestWithFlags(
-			t, "store:orders", "delete",
+			t,
 			"--api-key", "string",
+			"store:orders", "delete",
 			"--order-id", "0",
 		)
 	})

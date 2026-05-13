@@ -5,10 +5,9 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
-	"github.com/stainless-sdks/ee-cli/internal/apiquery"
-	"github.com/stainless-sdks/ee-cli/internal/requestflag"
+	"github.com/pops-maellard/stainless-cli/internal/apiquery"
+	"github.com/pops-maellard/stainless-cli/internal/requestflag"
 	"github.com/stainless-sdks/ee-go"
 	"github.com/stainless-sdks/ee-go/option"
 	"github.com/tidwall/gjson"
@@ -64,8 +63,9 @@ var usersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "username",
-			Required: true,
+			Name:      "username",
+			Required:  true,
+			PathParam: "username",
 		},
 	},
 	Action:          handleUsersRetrieve,
@@ -78,8 +78,9 @@ var usersUpdate = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "existing-username",
-			Required: true,
+			Name:      "existing-username",
+			Required:  true,
+			PathParam: "username",
 		},
 		&requestflag.Flag[int64]{
 			Name:     "id",
@@ -125,8 +126,9 @@ var usersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[string]{
-			Name:     "username",
-			Required: true,
+			Name:      "username",
+			Required:  true,
+			PathParam: "username",
 		},
 	},
 	Action:          handleUsersDelete,
@@ -220,8 +222,6 @@ func handleUsersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -233,6 +233,8 @@ func handleUsersCreate(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
+	params := ee.UserNewParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
 	_, err = client.Users.New(ctx, params, options...)
@@ -242,8 +244,15 @@ func handleUsersCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "users create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "users create",
+		Transform:      transform,
+	})
 }
 
 func handleUsersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -277,8 +286,15 @@ func handleUsersRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "users retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "users retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleUsersUpdate(ctx context.Context, cmd *cli.Command) error {
@@ -292,8 +308,6 @@ func handleUsersUpdate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserUpdateParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -304,6 +318,8 @@ func handleUsersUpdate(ctx context.Context, cmd *cli.Command) error {
 	if err != nil {
 		return err
 	}
+
+	params := ee.UserUpdateParams{}
 
 	return client.Users.Update(
 		ctx,
@@ -346,8 +362,6 @@ func handleUsersCreateWithList(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.UserNewWithListParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -359,6 +373,8 @@ func handleUsersCreateWithList(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
+	params := ee.UserNewWithListParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
 	_, err = client.Users.NewWithList(ctx, params, options...)
@@ -368,8 +384,15 @@ func handleUsersCreateWithList(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "users create-with-list", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "users create-with-list",
+		Transform:      transform,
+	})
 }
 
 func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
@@ -379,8 +402,6 @@ func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
 	if len(unusedArgs) > 0 {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
-
-	params := ee.UserLoginParams{}
 
 	options, err := flagOptions(
 		cmd,
@@ -393,6 +414,8 @@ func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
+	params := ee.UserLoginParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
 	_, err = client.Users.Login(ctx, params, options...)
@@ -402,8 +425,15 @@ func handleUsersLogin(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "users login", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "users login",
+		Transform:      transform,
+	})
 }
 
 func handleUsersLogout(ctx context.Context, cmd *cli.Command) error {

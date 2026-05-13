@@ -5,10 +5,9 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
 
-	"github.com/stainless-sdks/ee-cli/internal/apiquery"
-	"github.com/stainless-sdks/ee-cli/internal/requestflag"
+	"github.com/pops-maellard/stainless-cli/internal/apiquery"
+	"github.com/pops-maellard/stainless-cli/internal/requestflag"
 	"github.com/stainless-sdks/ee-go"
 	"github.com/stainless-sdks/ee-go/option"
 	"github.com/tidwall/gjson"
@@ -56,8 +55,9 @@ var storeOrdersRetrieve = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
-			Name:     "order-id",
-			Required: true,
+			Name:      "order-id",
+			Required:  true,
+			PathParam: "orderId",
 		},
 	},
 	Action:          handleStoreOrdersRetrieve,
@@ -70,8 +70,9 @@ var storeOrdersDelete = cli.Command{
 	Suggest: true,
 	Flags: []cli.Flag{
 		&requestflag.Flag[int64]{
-			Name:     "order-id",
-			Required: true,
+			Name:      "order-id",
+			Required:  true,
+			PathParam: "orderId",
 		},
 	},
 	Action:          handleStoreOrdersDelete,
@@ -86,8 +87,6 @@ func handleStoreOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 		return fmt.Errorf("Unexpected extra arguments: %v", unusedArgs)
 	}
 
-	params := ee.StoreOrderNewParams{}
-
 	options, err := flagOptions(
 		cmd,
 		apiquery.NestedQueryFormatBrackets,
@@ -99,6 +98,8 @@ func handleStoreOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 		return err
 	}
 
+	params := ee.StoreOrderNewParams{}
+
 	var res []byte
 	options = append(options, option.WithResponseBodyInto(&res))
 	_, err = client.Store.Orders.New(ctx, params, options...)
@@ -108,8 +109,15 @@ func handleStoreOrdersCreate(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "store:orders create", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "store:orders create",
+		Transform:      transform,
+	})
 }
 
 func handleStoreOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
@@ -143,8 +151,15 @@ func handleStoreOrdersRetrieve(ctx context.Context, cmd *cli.Command) error {
 
 	obj := gjson.ParseBytes(res)
 	format := cmd.Root().String("format")
+	explicitFormat := cmd.Root().IsSet("format")
 	transform := cmd.Root().String("transform")
-	return ShowJSON(os.Stdout, "store:orders retrieve", obj, format, transform)
+	return ShowJSON(obj, ShowJSONOpts{
+		ExplicitFormat: explicitFormat,
+		Format:         format,
+		RawOutput:      cmd.Root().Bool("raw-output"),
+		Title:          "store:orders retrieve",
+		Transform:      transform,
+	})
 }
 
 func handleStoreOrdersDelete(ctx context.Context, cmd *cli.Command) error {
